@@ -13,7 +13,7 @@ public class LevelDirector : MonoBehaviour {
         get
         {if (instance == null)
             {
-                throw new NullReferenceException("There is no LevelDirector");
+                throw new NullReferenceException("There is no LevelDirector");//测试是否为空
             }
             return instance;
         }
@@ -23,7 +23,7 @@ public class LevelDirector : MonoBehaviour {
     [SerializeField]private PlayerData date;
     private int score;
     private int maxScore;
-    
+    //分数比较和记录
     public int Score
     {
         get { return score; }
@@ -38,7 +38,7 @@ public class LevelDirector : MonoBehaviour {
         }
     }
     public int MaxScore { get { return maxScore; } }
-    public int PlayerLifeCount { get { return playerLifeCount; } }
+    public int PlayerLifeCount { get { return playerLifeCount; } }//定义生命值
     private MainPlane currentPlane;
     void Awake()
     {
@@ -58,13 +58,14 @@ public class LevelDirector : MonoBehaviour {
     }
     private IEnumerator Step()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         currentPlane = Instantiate(mainPlane, mainPlane.transform.position, Quaternion.identity);
         currentPlane.OnDeadEvent += OnMainPlaneDead;
     } 
     private void OnMainPlaneDead()
     {
         playerLifeCount --;
+        print(playerLifeCount);
         if (playerLifeCount > 0)
         {
             StartCoroutine(Step());
