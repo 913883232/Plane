@@ -51,9 +51,10 @@ public class Boss : MonoBehaviour,IHealthable
     public void Damage(int val)
     {
         Health -= val;
+        LevelDirector.Instance.Score += 100;
         if (Health <= 0)
         {
-            LevelDirector.Instance.Score += 100;
+            LevelDirector.Instance.Score += 1000;
             Destroy(gameObject);
         }
         print("Boss血量"+health);
