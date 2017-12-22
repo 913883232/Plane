@@ -15,6 +15,8 @@ public class Boss : MonoBehaviour,IHealthable
     private float MaxY;
     private float MinY;
     private Vector3 direction;
+    public delegate void OnBossDead();
+    public event OnBossDead OnBossDeadEvent;
     //血量
     private int health = 100;
     public int Health
@@ -55,7 +57,7 @@ public class Boss : MonoBehaviour,IHealthable
         if (Health <= 0)
         {
             LevelDirector.Instance.Score += 1000;
-            Destroy(gameObject);
+            DestroySelf();
         }
         print("Boss血量"+health);
     }
@@ -64,5 +66,13 @@ public class Boss : MonoBehaviour,IHealthable
     {
         transform.Translate(direction * Time.deltaTime * speed);
         transform.Translate(Vector3.down * Time.deltaTime * speed/25);
+    }
+    public void DestroySelf()
+    {
+        if (OnBossDeadEvent != null)
+        {
+            OnBossDeadEvent();
+        }
+        Destroy(this.gameObject);
     }
 }

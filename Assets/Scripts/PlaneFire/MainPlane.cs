@@ -111,6 +111,4 @@ public class MainPlane : MonoBehaviour, IHealthable
         }
         Destroy(this.gameObject);
     }
-
-
 }
