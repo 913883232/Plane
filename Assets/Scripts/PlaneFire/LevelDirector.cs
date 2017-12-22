@@ -3,22 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class LevelDirector : MonoBehaviour {
+public class LevelDirector : Singleton<LevelDirector> {
     private int playerLifeCount = 3;
     public Action GameStartAction;
     public Action GameOverAction;
     public Action VictoryAction;
-    private static LevelDirector instance;
-    public static LevelDirector Instance
-    {
-        get
-        {if (instance == null)
-            {
-                throw new NullReferenceException("There is no LevelDirector");//测试是否为空
-            }
-            return instance;
-        }
-    }
+    
     [SerializeField]private MainPlane mainPlane;
     [SerializeField]private Boss bossPlane;
     [SerializeField]private PlayerData date;
@@ -42,12 +32,15 @@ public class LevelDirector : MonoBehaviour {
     public int PlayerLifeCount { get { return playerLifeCount; } }//定义生命值
     private MainPlane currentPlane;
     private Boss currentBoss;
-    void Awake()
+    protected override void Awake()
     {
-        instance = this;
         Init();
     }
     void Start () {
+        if (GameStartAction != null)
+            GameStartAction();
+        if (UIManager.Instance != null)
+            UIManager.Instance.FaderOn(false, 1f);
         StartCoroutine(Step());
         StartCoroutine(Enermy());
 	}
