@@ -38,7 +38,6 @@ public class MainMenu : MonoBehaviour {
     }
     public void StartButton()
     {
-        UIManager.Instance.FaderOn(true, 1f);
         StartCoroutine(StartLevel1());
     }
     public void OptionButton()
@@ -53,7 +52,8 @@ public class MainMenu : MonoBehaviour {
     }
     private IEnumerator StartLevel1()
     {
-        yield return new WaitForSeconds(2F);
+        UIManager.Instance.FaderOn(true, 1f);
+        yield return new WaitForSeconds(1F);
         SceneManager.LoadScene(loadSceneName);
     }
     private void DisplayMenu()

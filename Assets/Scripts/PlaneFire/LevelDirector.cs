@@ -30,15 +30,15 @@ public class LevelDirector : Singleton<LevelDirector> {
     }
     public int MaxScore { get { return maxScore; } }
     public int PlayerLifeCount { get { return playerLifeCount; } }//定义生命值
-    private MainPlane currentPlane;
+    public MainPlane currentPlane { get;private set; }
     private Boss currentBoss;
     protected override void Awake()
     {
         Init();
     }
     void Start () {
-        if (GameStartAction != null)
-            GameStartAction();
+        //if (GameStartAction != null)
+        //    GameStartAction();
         if (UIManager.Instance != null)
             UIManager.Instance.FaderOn(false, 1f);
         StartCoroutine(Step());
@@ -54,7 +54,7 @@ public class LevelDirector : Singleton<LevelDirector> {
     }
     private IEnumerator Step()
     {
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(2);
         currentPlane = Instantiate(mainPlane, mainPlane.transform.position, Quaternion.identity);
         currentPlane.OnDeadEvent += OnMainPlaneDead;
     }

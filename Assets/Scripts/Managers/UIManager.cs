@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIManager : PersistentSingleton<UIManager> {
+public class UIManager : Singleton<UIManager> {
     [SerializeField]
     private Image fader;
     protected override void Awake()
@@ -19,7 +19,7 @@ public class UIManager : PersistentSingleton<UIManager> {
         if (fader != null)
         {
             fader.gameObject.SetActive(true);
-            if (state)
+            if (state == true)
             {
                 StartCoroutine(FadeInOut.FadeImage(fader, duration, new Color(0, 0, 0, 1)));
             }

@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
+using UnityEngine.SceneManagement;
+//#if UNITY_EDITOR
+//using UnityEditor;
+//#endif
 //暂停界面
 public class PauseManager : MonoBehaviour {
     [SerializeField]
@@ -13,6 +14,8 @@ public class PauseManager : MonoBehaviour {
     private CanvasGroup pauseGroup;
     [SerializeField]
     private CanvasGroup settingGroup;
+    [SerializeField]
+    private string loadSceneName;
     bool isPause = false;
 
     Stack<CanvasGroup> canvasGroupStack = new Stack<CanvasGroup>();
@@ -62,6 +65,17 @@ public class PauseManager : MonoBehaviour {
         canvasGroupStack.Push(settingGroup);
         DisplayMenu();
     }
+    public void BackToMenuButton()
+    {
+        Time.timeScale = 1;
+        UIManager.Instance.FaderOn(true, 2f);
+        StartCoroutine(BackToMenu());
+    }
+    private IEnumerator BackToMenu()
+    {
+        yield return new WaitForSeconds(2F);
+        SceneManager.LoadScene(loadSceneName);
+    }
     public void Pause()
     {
         isPause = !isPause;
@@ -91,12 +105,12 @@ public class PauseManager : MonoBehaviour {
         Time.timeScale = isPause ? 0 : 1;
         Lowpass();
     }
-    public void Exit()
-    {
-#if UNITY_EDITOR
-        EditorApplication.isPlaying = false;
-#else
-        Application.Quit;
-#endif
-    }
+//    public void Exit()
+//    {
+//#if UNITY_EDITOR
+//        EditorApplication.isPlaying = false;
+//#else
+//        Application.Quit;
+//#endif
+//    }
 }

@@ -48,7 +48,13 @@ public class Boss : MonoBehaviour,IHealthable
     }
     private void Fire()
     {
-        Instantiate(bulletPrefab, this.transform.position, Quaternion.identity);
+        for (int i = 1; i < 9; i++)
+        {
+            float j =i* 360 / 8;
+            Quaternion target = Quaternion.Euler(0, 0, j);
+            Instantiate(bulletPrefab, this.transform.position,target);
+        }
+        
     }
     public void Damage(int val)
     {

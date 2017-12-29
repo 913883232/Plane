@@ -194,6 +194,7 @@ MonoBehaviour:
   bullet: {fileID: 1157436131771876, guid: c585979e4db9d6340a05c8fbe163b36b, type: 2}
   speed: 5
   coll: {fileID: 58892221841423660}
+  timeRate: 0.2
 --- !u!212 &212130508585113292
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -14,6 +14,9 @@ public class MainPlane : MonoBehaviour, IHealthable
     private AudioSource BulletAudio;//子弹音效
     [SerializeField]
     private Collider2D coll;
+    private float timer;
+    [SerializeField]
+    private float timeRate;
     //玩家血量
     private int health = 100;
     public int Health
@@ -52,7 +55,11 @@ public class MainPlane : MonoBehaviour, IHealthable
         //发射子弹
         if (Input.GetButtonDown("Fire1"))
         {
-            Fire();
+            FireOnce();
+        }
+        if (Input.GetButton("Jump"))
+        {
+            FireStart();
         }
         ClampFrame();
         Move();
@@ -64,10 +71,22 @@ public class MainPlane : MonoBehaviour, IHealthable
         return trans.position;
     }
     //生成子弹
-    private void Fire()
+    private void FireStart()
     {
+        if (health <= 0) return;
+        timer += Time.deltaTime;
+        if (timer > timeRate)
+        {
+            Instantiate(bullet, trans.position, Quaternion.identity);
+            timer = 0;
+        }
+    }
+    private void FireOnce()
+    {
+        if (health <= 0) return;
         Instantiate(bullet, trans.position, Quaternion.identity);
         BulletAudio.Play();
+        timer = 0;
     }
     //飞机移动
     private void Move()
